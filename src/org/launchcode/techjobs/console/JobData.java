@@ -84,6 +84,11 @@ public class JobData {
         return jobs;
     }
 
+    public static ArrayList<String> findByValue(String value){
+        loadData();
+        
+    }
+
     /**
      * Read in data from a CSV file and store it in a list
      */
