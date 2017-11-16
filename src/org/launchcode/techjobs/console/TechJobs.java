@@ -1,9 +1,6 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -47,6 +44,7 @@ public class TechJobs {
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
+                    Collections.sort(results);
                     for (String item : results) {
                         System.out.println(item);
                     }
@@ -60,9 +58,14 @@ public class TechJobs {
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
+                searchTerm.toLowerCase();
 
                 if (searchField.equals("all")) {
-                    printJobs(JobData.findAll());
+                    if (searchTerm.equals("all")){
+                        printJobs(JobData.findAll());
+                    }else{
+                        printJobs(JobData.findByValue(searchTerm));
+                    }
                 } else if (JobData.findAll(searchField).contains(searchTerm)) {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 } else {
@@ -114,11 +117,11 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
         for (HashMap<String,String> job : someJobs) {
-            //System.out.println("Hashmap name = " +job.get("name"));
+            System.out.println("*****");
             for(Map.Entry<String, String> item : job.entrySet()){
                 System.out.println(item.getKey() + "  :  " + item.getValue());
             }
-            System.out.println("*****");
+            System.out.println("*****\n");
         }
     }
 }
